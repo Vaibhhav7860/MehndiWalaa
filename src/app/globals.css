@@ -1,26 +1,135 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-henna-950: #1A0001;
+  --color-henna-900: #2D0001;
+  --color-henna-800: #3D0002;
+  --color-henna-700: #4B0002;
+  --color-henna-600: #6B1020;
+  --color-henna-500: #8B2040;
+  --color-henna-400: #A83050;
+  --color-henna-300: #C44060;
+  --color-henna-200: #E06080;
+  --color-henna-100: #F0A0B0;
+  --color-henna-50: #FFF0F3;
+
+  --color-gold-600: #B8960E;
+  --color-gold-500: #D4AF37;
+  --color-gold-400: #E8C547;
+  --color-gold-300: #F0D060;
+  --color-gold-200: #F5E090;
+  --color-gold-100: #FBF0C0;
+  --color-gold-50: #FFFAEB;
+
+  --color-cream-900: #4A4530;
+  --color-cream-700: #8A8060;
+  --color-cream-500: #C0B890;
+  --color-cream-300: #E8E0C0;
+  --color-cream-200: #F0ECD0;
+  --color-cream-100: #FFFDD0;
+  --color-cream-50: #FFFEF5;
+
+  --font-heading: 'Playfair Display', Georgia, serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+
+  --animate-fade-in: fade-in 0.6s ease-out forwards;
+  --animate-fade-in-up: fade-in-up 0.6s ease-out forwards;
+  --animate-slide-in-right: slide-in-right 0.4s ease-out forwards;
+  --animate-pulse-gold: pulse-gold 2s ease-in-out infinite;
+  --animate-float: float 3s ease-in-out infinite;
+  --animate-shimmer: shimmer 2s linear infinite;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+@keyframes fade-in {
+  from { opacity: 0; } to { opacity: 1; }
+}
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); }
+}
+@keyframes slide-in-right {
+  from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); }
+}
+@keyframes pulse-gold {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(212,175,55,0.4); }
+  50% { box-shadow: 0 0 0 12px rgba(212,175,55,0); }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+/* ─── Base Styles ─────────────────────────────────────────── */
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-body);
+  background: var(--color-cream-50);
+  color: var(--color-henna-950);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  line-height: 1.2;
+  color: var(--color-henna-700);
+}
+
+/* ─── Glassmorphism ───────────────────────────────────────── */
+.glass {
+  background: rgba(255, 253, 208, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  box-shadow: 0 8px 32px rgba(75, 0, 2, 0.08);
+}
+
+.glass-dark {
+  background: rgba(75, 0, 2, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(212, 175, 55, 0.15);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+/* ─── Hover Lift ──────────────────────────────────────────── */
+.hover-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(75, 0, 2, 0.12);
+}
+
+/* ─── Gold Gradient Text ──────────────────────────────────── */
+.text-gradient-gold {
+  background: linear-gradient(135deg, var(--color-gold-500), var(--color-gold-300), var(--color-gold-500));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ─── Scrollbar ───────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--color-cream-100); }
+::-webkit-scrollbar-thumb { background: var(--color-gold-500); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-gold-600); }
+
+/* ─── Selection ───────────────────────────────────────────── */
+::selection {
+  background: var(--color-gold-200);
+  color: var(--color-henna-900);
+}
+
+/* ─── Loading Skeleton ────────────────────────────────────── */
+.skeleton {
+  background: linear-gradient(90deg, var(--color-cream-200) 25%, var(--color-cream-100) 50%, var(--color-cream-200) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 2s linear infinite;
 }
