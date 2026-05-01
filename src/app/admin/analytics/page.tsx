@@ -39,18 +39,86 @@ export default function AnalyticsPage() {
         ))}
       </div>
 
-      <div className="bg-white rounded-2xl border border-cream-200 p-6">
-        <h3 className="font-semibold text-henna-700 mb-4">Monthly User Growth</h3>
-        <div className="flex items-end gap-4 h-48">
-          {months.map((m, i) => (
-            <div key={m} className="flex-1 flex flex-col items-center gap-2">
-              <div className="w-full bg-gradient-to-t from-gold-500 to-gold-300 rounded-t-lg transition-all" style={{ height: `${(data[i] / maxVal) * 100}%` }} />
-              <span className="text-xs text-henna-400">{m}</span>
-              <span className="text-xs font-semibold text-henna-700">{data[i]}</span>
+      {(() => {
+        const chartW = 700, chartH = 260;
+        const padL = 55, padR = 20, padT = 20, padB = 40;
+        const w = chartW - padL - padR;
+        const h = chartH - padT - padB;
+        const minVal = Math.min(...data) * 0.8;
+        const yRange = maxVal - minVal || 1;
+        const points = data.map((d, i) => ({
+          x: padL + (i / (data.length - 1)) * w,
+          y: padT + h - ((d - minVal) / yRange) * h,
+          val: d,
+          label: months[i],
+        }));
+        const linePath = points.map((p, i) => `${i === 0 ? 'M' : 'L'}${p.x},${p.y}`).join(' ');
+        const areaPath = `${linePath} L${points[points.length - 1].x},${padT + h} L${points[0].x},${padT + h} Z`;
+        const yTicks = 5;
+        const ySteps = Array.from({ length: yTicks + 1 }, (_, i) => {
+          const val = minVal + (yRange / yTicks) * i;
+          const y = padT + h - (i / yTicks) * h;
+          return { val: Math.round(val), y };
+        });
+
+        return (
+          <div className="bg-white rounded-2xl border border-cream-200 p-6">
+            <h3 className="font-semibold text-henna-700 mb-4">Monthly User Growth</h3>
+            <div className="w-full overflow-x-auto">
+              <svg viewBox={`0 0 ${chartW} ${chartH}`} className="w-full min-w-[500px]" style={{ height: 'auto', maxHeight: 280 }}>
+                <defs>
+                  <linearGradient id="lineGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#D4AF37" stopOpacity="0.4" />
+                    <stop offset="100%" stopColor="#D4AF37" stopOpacity="0.02" />
+                  </linearGradient>
+                  <linearGradient id="strokeGrad" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0%" stopColor="#B8960E" />
+                    <stop offset="50%" stopColor="#D4AF37" />
+                    <stop offset="100%" stopColor="#E8C547" />
+                  </linearGradient>
+                  <filter id="dotShadow" x="-50%" y="-50%" width="200%" height="200%">
+                    <feDropShadow dx="0" dy="1" stdDeviation="2" floodColor="#D4AF37" floodOpacity="0.4" />
+                  </filter>
+                </defs>
+
+                {/* Horizontal grid lines + Y labels */}
+                {ySteps.map((t, i) => (
+                  <g key={i}>
+                    <line x1={padL} y1={t.y} x2={chartW - padR} y2={t.y} stroke="#F0ECD0" strokeWidth="1" />
+                    <text x={padL - 8} y={t.y + 4} textAnchor="end" fontSize="10" fill="#8B2040" fontWeight="500">{t.val.toLocaleString()}</text>
+                  </g>
+                ))}
+
+                {/* Area fill */}
+                <path d={areaPath} fill="url(#lineGrad)" />
+
+                {/* Line */}
+                <path d={linePath} fill="none" stroke="url(#strokeGrad)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+
+                {/* Data points + labels */}
+                {points.map((p, i) => (
+                  <g key={i}>
+                    {/* Vertical dashed guide */}
+                    <line x1={p.x} y1={p.y} x2={p.x} y2={padT + h} stroke="#D4AF37" strokeWidth="0.5" strokeDasharray="3,3" opacity="0.3" />
+
+                    {/* Outer glow ring */}
+                    <circle cx={p.x} cy={p.y} r="8" fill="#D4AF37" opacity="0.1" />
+
+                    {/* Data dot */}
+                    <circle cx={p.x} cy={p.y} r="5" fill="white" stroke="#D4AF37" strokeWidth="2.5" filter="url(#dotShadow)" />
+
+                    {/* Value label above dot */}
+                    <text x={p.x} y={p.y - 14} textAnchor="middle" fontSize="10" fontWeight="700" fill="#4B0002">{p.val.toLocaleString()}</text>
+
+                    {/* Month label below axis */}
+                    <text x={p.x} y={padT + h + 18} textAnchor="middle" fontSize="11" fill="#8B2040" fontWeight="500">{p.label}</text>
+                  </g>
+                ))}
+              </svg>
             </div>
-          ))}
-        </div>
-      </div>
+          </div>
+        );
+      })()}
 
       <div className="grid lg:grid-cols-2 gap-6">
         <div className="bg-white rounded-2xl border border-cream-200 p-5">
