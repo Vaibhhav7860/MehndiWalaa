@@ -39,12 +39,12 @@ export function Navbar() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 sm:h-20">
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-2 group">
-              <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-gold-500 group-hover:border-gold-400 transition-colors">
-                <Image src="/images/logo.png" alt="MehndiWalaa" width={40} height={40} className="object-cover" />
+            <Link href="/" className="flex items-center gap-1.5 sm:gap-2 group min-w-0">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full overflow-hidden border-2 border-gold-500 group-hover:border-gold-400 transition-colors flex-shrink-0">
+                <Image src="/images/logo.png" alt="MehndiWalaa" width={40} height={40} className="object-cover w-full h-full" />
               </div>
-              <div>
-                <span className="text-lg sm:text-xl font-bold font-[family-name:var(--font-heading)] text-henna-700">
+              <div className="min-w-0">
+                <span className="text-[17px] sm:text-xl font-bold font-[family-name:var(--font-heading)] text-henna-700 whitespace-nowrap block truncate">
                   Mehndi<span className="text-gold-500">Walaa</span>
                 </span>
               </div>
@@ -64,16 +64,16 @@ export function Navbar() {
             </nav>
 
             {/* Right Actions */}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
               {isAuthenticated ? (
                 <>
-                  <Link href="/dashboard/shortlist" className="p-2 text-henna-600 hover:text-gold-500 transition-colors relative">
-                    <Heart size={20} />
+                  <Link href="/dashboard/shortlist" className="p-1 sm:p-2 text-henna-600 hover:text-gold-500 transition-colors relative flex-shrink-0">
+                    <Heart size={20} className="w-5 h-5 sm:w-6 sm:h-6" />
                     <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-gold-500 text-white text-[10px] rounded-full flex items-center justify-center">3</span>
                   </Link>
-                  <div className="relative">
-                    <button onClick={() => { setIsNotifOpen(!isNotifOpen); setIsProfileOpen(false); }} className="p-2 text-henna-600 hover:text-gold-500 transition-colors relative">
-                      <Bell size={20} />
+                  <div className="relative flex-shrink-0">
+                    <button onClick={() => { setIsNotifOpen(!isNotifOpen); setIsProfileOpen(false); }} className="p-1 sm:p-2 text-henna-600 hover:text-gold-500 transition-colors relative">
+                      <Bell size={20} className="w-5 h-5 sm:w-6 sm:h-6" />
                       {unreadCount > 0 && <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-henna-600 text-white text-[10px] rounded-full flex items-center justify-center">{unreadCount}</span>}
                     </button>
                     <AnimatePresence>
@@ -100,13 +100,13 @@ export function Navbar() {
                       )}
                     </AnimatePresence>
                   </div>
-                  <div className="relative">
-                    <button onClick={() => setIsProfileOpen(!isProfileOpen)} className="flex items-center gap-2 pl-2 pr-3 py-1.5 rounded-full bg-cream-100 hover:bg-cream-200 transition-colors">
-                      <div className="w-7 h-7 rounded-full bg-gold-500 flex items-center justify-center text-white text-xs font-bold">
+                  <div className="relative flex-shrink-0">
+                    <button onClick={() => setIsProfileOpen(!isProfileOpen)} className="flex items-center gap-1 sm:gap-2 p-1 sm:pl-2 sm:pr-3 sm:py-1.5 rounded-full bg-cream-100 hover:bg-cream-200 transition-colors">
+                      <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-gold-500 flex items-center justify-center text-white text-xs font-bold">
                         {user?.name?.[0]}
                       </div>
                       <span className="text-sm font-medium text-henna-800 hidden sm:block">{user?.name?.split(' ')[0]}</span>
-                      <ChevronDown size={14} className="text-henna-400" />
+                      <ChevronDown size={14} className="text-henna-400 hidden sm:block" />
                     </button>
                     <AnimatePresence>
                       {isProfileOpen && (
@@ -141,13 +141,13 @@ export function Navbar() {
               ) : (
                 <button
                   onClick={openOtpModal}
-                  className="px-4 py-1.5 sm:px-5 sm:py-2 bg-henna-700 text-cream-100 text-sm font-semibold rounded-full hover:bg-henna-600 transition-all hover:shadow-lg hover:shadow-henna-700/20"
+                  className="px-3 py-1.5 sm:px-5 sm:py-2 bg-henna-700 text-cream-100 text-sm font-semibold rounded-full hover:bg-henna-600 transition-all hover:shadow-lg hover:shadow-henna-700/20 flex-shrink-0"
                 >
                   Login
                 </button>
               )}
-              <button onClick={() => setIsMobileOpen(true)} className="md:hidden p-2 text-henna-700">
-                <Menu size={24} />
+              <button onClick={() => setIsMobileOpen(true)} className="md:hidden p-1 sm:p-2 text-henna-700 flex-shrink-0">
+                <Menu size={24} className="w-6 h-6 sm:w-6 sm:h-6" />
               </button>
             </div>
           </div>

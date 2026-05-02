@@ -123,7 +123,7 @@ function ArtistCard({ artist, index }: { artist: typeof artists[0]; index: numbe
           <Heart size={16} className={liked ? 'fill-red-500 text-red-500' : 'text-henna-400'} />
         </button>
 
-        <div className="absolute bottom-3 left-3 right-3 flex items-end justify-between">
+        <div className="absolute bottom-3 left-3 right-3 flex flex-wrap items-end justify-between gap-2">
           <div className="flex items-center gap-1 px-2 py-1 bg-black/40 backdrop-blur-sm rounded-lg">
             <Star size={12} className="text-gold-400 fill-gold-400" />
             <span className="text-white text-xs font-bold">{artist.rating.toFixed(1)}</span>
@@ -152,7 +152,7 @@ function ArtistCard({ artist, index }: { artist: typeof artists[0]; index: numbe
           {artist.designStyles.length > 3 && <span className="text-[11px] text-henna-400 px-1">+{artist.designStyles.length - 3}</span>}
         </div>
 
-        <div className="flex items-center justify-between mt-3 pt-3 border-t border-cream-100">
+        <div className="flex flex-wrap items-center justify-between gap-3 mt-3 pt-3 border-t border-cream-100">
           <div>
             <p className="text-xs text-henna-400">Starting from</p>
             <p className="text-lg font-bold text-henna-700">{formatPrice(artist.priceRange.min)}</p>
@@ -184,9 +184,9 @@ function InlineLeadForm() {
           <h3 className="text-xl font-bold font-[family-name:var(--font-heading)] mb-1">Can&apos;t decide? Let us help!</h3>
           <p className="text-cream-300 text-sm">Send your requirements and we&apos;ll match you with the best artists in your area.</p>
         </div>
-        <div className="flex gap-2 w-full sm:w-auto">
-          <input placeholder="Your phone number" className="flex-1 sm:w-48 px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-cream-100 placeholder:text-cream-500 text-sm focus:outline-none focus:ring-2 focus:ring-gold-500" />
-          <button className="px-6 py-3 bg-gold-500 text-henna-900 rounded-xl font-semibold text-sm hover:bg-gold-400 transition-colors whitespace-nowrap">
+        <div className="flex flex-wrap sm:flex-nowrap gap-2 w-full sm:w-auto">
+          <input placeholder="Your phone number" className="w-full sm:flex-1 sm:w-48 px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-cream-100 placeholder:text-cream-500 text-sm focus:outline-none focus:ring-2 focus:ring-gold-500" />
+          <button className="w-full sm:w-auto px-6 py-3 bg-gold-500 text-henna-900 rounded-xl font-semibold text-sm hover:bg-gold-400 transition-colors whitespace-nowrap">
             Send Enquiry
           </button>
         </div>

@@ -39,7 +39,7 @@ export default function ArtistDetailPage() {
             <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl overflow-hidden border-3 border-white shadow-xl flex-shrink-0">
               <Image src={artist.profileImage} alt={artist.name} width={96} height={96} className="object-cover w-full h-full" />
             </div>
-            <div className="flex-1 text-white mb-1">
+            <div className="flex-1 min-w-0 text-white mb-1">
               <div className="flex items-center gap-2 flex-wrap mb-1">
                 {artist.isVerified && <span className="px-2 py-0.5 bg-green-500/90 text-[10px] font-bold rounded-full flex items-center gap-1"><CheckCircle size={10} /> Verified</span>}
                 {artist.isRecommended && <span className="px-2 py-0.5 bg-gold-500/90 text-[10px] font-bold rounded-full flex items-center gap-1"><Award size={10} /> Recommended</span>}
@@ -61,7 +61,7 @@ export default function ArtistDetailPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Main Content */}
-          <div className="lg:col-span-2 space-y-6">
+          <div className="lg:col-span-2 space-y-6 min-w-0">
             {/* Trust Signals Bar */}
             <div className="bg-white rounded-2xl p-4 border border-cream-200 grid grid-cols-2 sm:grid-cols-4 gap-4">
               {[
@@ -80,12 +80,12 @@ export default function ArtistDetailPage() {
 
             {/* Social Proof */}
             <div className="flex items-center gap-2 px-4 py-2 bg-gold-50 rounded-xl border border-gold-100">
-              <Eye size={16} className="text-gold-600" />
-              <span className="text-sm text-henna-700"><strong>{artist.weeklyViews}</strong> people viewed this profile this week</span>
+              <Eye size={16} className="text-gold-600 flex-shrink-0" />
+              <span className="text-sm text-henna-700 min-w-0"><strong>{artist.weeklyViews}</strong> people viewed this profile this week</span>
             </div>
 
             {/* Tabs */}
-            <div className="flex gap-1 bg-cream-100 rounded-xl p-1 overflow-x-auto">
+            <div className="flex gap-1 bg-cream-100 rounded-xl p-1 overflow-x-auto w-full scrollbar-hide">
               {tabs.map(t => (
                 <button key={t.id} onClick={() => setActiveTab(t.id)}
                   className={`px-4 py-2.5 text-sm font-medium rounded-lg whitespace-nowrap transition-all ${activeTab === t.id ? 'bg-white text-henna-700 shadow-sm' : 'text-henna-400 hover:text-henna-600'}`}>
@@ -136,8 +136,8 @@ export default function ArtistDetailPage() {
             {/* Reviews Tab */}
             {activeTab === 'reviews' && (
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-4">
-                <div className="bg-white p-5 rounded-2xl border border-cream-200 flex items-center gap-6">
-                  <div className="text-center">
+                <div className="bg-white p-5 rounded-2xl border border-cream-200 flex flex-col sm:flex-row items-center gap-6">
+                  <div className="text-center flex-shrink-0">
                     <p className="text-4xl font-bold text-henna-700">{artist.rating.toFixed(1)}</p>
                     <div className="flex gap-0.5 mt-1">{Array.from({length:5},(_,i)=><Star key={i} size={14} className={i < Math.round(artist.rating) ? 'fill-gold-500 text-gold-500' : 'text-cream-300'} />)}</div>
                     <p className="text-xs text-henna-400 mt-1">{artist.reviews.length} reviews</p>
@@ -202,9 +202,9 @@ export default function ArtistDetailPage() {
                   {similar.map(a => (
                     <Link key={a.id} href={`/artists/${a.id}`} className="bg-white rounded-xl p-3 border border-cream-200 hover-lift flex items-center gap-3">
                       <div className="w-14 h-14 rounded-lg overflow-hidden flex-shrink-0"><Image src={a.profileImage} alt={a.name} width={56} height={56} className="object-cover w-full h-full" /></div>
-                      <div>
-                        <p className="font-semibold text-sm text-henna-800">{a.name}</p>
-                        <div className="flex items-center gap-1 text-xs text-henna-400"><Star size={10} className="fill-gold-500 text-gold-500" /> {a.rating.toFixed(1)} · {formatPrice(a.priceRange.min)}+</div>
+                      <div className="min-w-0 flex-1">
+                        <p className="font-semibold text-sm text-henna-800 truncate">{a.name}</p>
+                        <div className="flex items-center gap-1 text-xs text-henna-400 min-w-0"><Star size={10} className="fill-gold-500 text-gold-500 flex-shrink-0" /> <span className="truncate">{a.rating.toFixed(1)} · {formatPrice(a.priceRange.min)}+</span></div>
                       </div>
                     </Link>
                   ))}
@@ -214,7 +214,7 @@ export default function ArtistDetailPage() {
           </div>
 
           {/* Sidebar */}
-          <div className="space-y-4">
+          <div className="space-y-4 min-w-0">
             {/* Price & CTA */}
             <div className="bg-white rounded-2xl p-5 border border-cream-200 sticky top-24">
               <p className="text-sm text-henna-400">Starting from</p>
@@ -280,10 +280,10 @@ export default function ArtistDetailPage() {
       </div>
 
       {/* Mobile Sticky CTA */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-cream-200 p-3 flex gap-2 sm:hidden z-40">
-        <button onClick={handleContact} className="flex-1 py-3 bg-henna-700 text-cream-100 rounded-xl font-semibold text-sm flex items-center justify-center gap-1"><MessageCircle size={16} /> Enquiry</button>
-        <button onClick={handleContact} className="py-3 px-4 bg-green-50 text-green-700 rounded-xl font-medium text-sm"><MessageCircle size={16} /></button>
-        <button onClick={handleContact} className="py-3 px-4 bg-blue-50 text-blue-700 rounded-xl font-medium text-sm"><Phone size={16} /></button>
+      <div className="fixed bottom-0 left-0 right-0 w-full bg-white border-t border-cream-200 p-3 flex items-center justify-between gap-2 sm:hidden z-40 overflow-hidden">
+        <button onClick={handleContact} className="flex-1 min-w-0 py-3 bg-henna-700 text-cream-100 rounded-xl font-semibold text-sm flex items-center justify-center gap-1"><MessageCircle size={16} className="flex-shrink-0" /> <span className="truncate">Enquiry</span></button>
+        <button onClick={handleContact} className="py-3 px-4 bg-green-50 text-green-700 rounded-xl font-medium text-sm flex-shrink-0"><MessageCircle size={16} /></button>
+        <button onClick={handleContact} className="py-3 px-4 bg-blue-50 text-blue-700 rounded-xl font-medium text-sm flex-shrink-0"><Phone size={16} /></button>
       </div>
     </div>
   );

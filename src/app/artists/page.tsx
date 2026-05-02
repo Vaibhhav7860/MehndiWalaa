@@ -135,7 +135,7 @@ export default function ArtistsPage() {
                   <button onClick={() => toggleLike(artist.id)} className="absolute top-3 right-3 w-8 h-8 bg-white/80 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white">
                     <Heart size={16} className={liked.has(artist.id) ? 'fill-red-500 text-red-500' : 'text-henna-400'} />
                   </button>
-                  <div className="absolute bottom-3 left-3 flex items-center gap-2">
+                  <div className="absolute bottom-3 left-3 right-3 flex flex-wrap items-center gap-2">
                     <span className="flex items-center gap-1 px-2 py-1 bg-black/40 backdrop-blur-sm rounded-lg text-white text-xs font-bold"><Star size={12} className="text-gold-400 fill-gold-400" /> {artist.rating.toFixed(1)} ({artist.reviews.length})</span>
                     <span className="text-white/80 text-xs bg-black/40 backdrop-blur-sm px-2 py-1 rounded-lg"><Clock size={10} className="inline mr-1" />{artist.responseTime}</span>
                   </div>
@@ -148,7 +148,7 @@ export default function ArtistsPage() {
                   <div className="flex flex-wrap gap-1 mt-2.5">
                     {artist.designStyles.slice(0, 3).map(s => <span key={s} className="px-2 py-0.5 bg-cream-100 text-henna-600 text-[11px] rounded-full font-medium">{s}</span>)}
                   </div>
-                  <div className="flex items-center justify-between mt-3 pt-3 border-t border-cream-100">
+                  <div className="flex flex-wrap items-center justify-between gap-3 mt-3 pt-3 border-t border-cream-100">
                     <div><p className="text-xs text-henna-400">Starting from</p><p className="text-lg font-bold text-henna-700">{formatPrice(artist.priceRange.min)}</p></div>
                     <div className="flex gap-1.5">
                       <button onClick={handleContact} className="p-2 bg-green-50 text-green-600 rounded-lg hover:bg-green-100"><MessageCircle size={16} /></button>
