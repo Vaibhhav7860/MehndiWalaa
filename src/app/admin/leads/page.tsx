@@ -16,12 +16,12 @@ export default function AdminLeadsPage() {
       <p className="text-sm text-henna-400">Review fake lead reports within 48 hours. Confirmed fakes are refunded to artist wallet.</p>
       <div className="space-y-3">
         {reports.map(r => (
-          <div key={r.id} className="bg-white rounded-2xl border border-cream-200 p-5 flex items-center justify-between">
+          <div key={r.id} className="bg-white rounded-2xl border border-cream-200 p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
             <div>
               <p className="font-semibold text-henna-800">Report by {r.artist}</p>
               <p className="text-sm text-henna-400">Reporter: {r.reporter} · Reason: {r.reason} · {r.reportedAt}</p>
             </div>
-            <div className="flex gap-2">
+            <div className="flex gap-2 self-end sm:self-auto flex-wrap">
               {r.status === 'pending' ? (
                 <>
                   <button className="px-3 py-1.5 bg-cream-100 text-henna-600 rounded-lg text-xs font-medium">Dismiss</button>

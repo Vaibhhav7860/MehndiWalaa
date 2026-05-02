@@ -11,7 +11,7 @@ export default function AdminStorePage() {
         <h1 className="text-2xl font-bold font-[family-name:var(--font-heading)] text-henna-700 flex items-center gap-2"><Store size={24} /> Store Catalog</h1>
         <button className="px-4 py-2 bg-henna-700 text-cream-100 rounded-full text-sm font-semibold flex items-center gap-1"><Plus size={14} /> Add Product</button>
       </div>
-      <div className="bg-white rounded-2xl border border-cream-200 overflow-hidden">
+      <div className="bg-white rounded-2xl border border-cream-200 overflow-x-auto">
         <table className="w-full text-sm">
           <thead><tr className="bg-cream-50 border-b border-cream-200">
             <th className="text-left px-4 py-3 text-henna-600 font-medium">Product</th>

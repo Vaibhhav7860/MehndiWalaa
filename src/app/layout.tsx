@@ -20,6 +20,13 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+};
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
@@ -28,11 +35,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name="theme-color" content="#4B0002" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
       </head>
-      <body className="antialiased">
+      <body className="antialiased w-full overflow-x-hidden bg-cream-50">
         <AuthProvider>
-          <Navbar />
-          <main className="min-h-screen">{children}</main>
-          <Footer />
+          <div className="flex flex-col min-h-screen overflow-x-hidden w-full relative">
+            <Navbar />
+            <main className="flex-1 w-full">{children}</main>
+            <Footer />
+          </div>
           <OTPModal />
           <AIChatbot />
           <FirstVisitPopup />

@@ -67,7 +67,7 @@ export function AIChatbot() {
         {isOpen && (
           <motion.div
             initial={{ opacity: 0, y: 20, scale: 0.9 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 20, scale: 0.9 }}
-            className="fixed bottom-24 right-6 z-50 w-[340px] sm:w-[380px] bg-white rounded-2xl shadow-2xl border border-cream-200 overflow-hidden"
+            className="fixed bottom-24 right-4 sm:right-6 z-50 w-[calc(100vw-2rem)] sm:w-[380px] bg-white rounded-2xl shadow-2xl border border-cream-200 overflow-hidden"
           >
             <div className="bg-henna-700 text-cream-100 px-5 py-4 flex items-center gap-3">
               <div className="w-9 h-9 bg-gold-500 rounded-full flex items-center justify-center"><Sparkles size={18} /></div>

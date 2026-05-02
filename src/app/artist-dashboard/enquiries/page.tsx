@@ -22,7 +22,7 @@ export default function EnquiriesPage() {
         {leads.map((l, i) => (
           <motion.div key={l.id} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}
             className={`bg-white rounded-2xl border p-5 ${l.isUrgent ? 'border-red-200' : 'border-cream-200'}`}>
-            <div className="flex items-start justify-between mb-3">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-3 gap-2">
               <div className="flex items-center gap-3">
                 <div className={`w-11 h-11 rounded-full flex items-center justify-center font-bold ${l.isUrgent ? 'bg-red-100 text-red-700' : 'bg-gold-100 text-gold-700'}`}>{l.userName[0]}</div>
                 <div>
@@ -33,11 +33,11 @@ export default function EnquiriesPage() {
               <span className={`px-3 py-1 rounded-full text-xs font-medium capitalize ${l.status === 'new' ? 'bg-blue-100 text-blue-700' : l.status === 'unlocked' ? 'bg-green-100 text-green-700' : 'bg-cream-100 text-henna-600'}`}>{l.status}</span>
             </div>
             <p className="text-sm text-henna-600 mb-2">{l.message}</p>
-            <div className="flex items-center gap-4 text-xs text-henna-400 mb-3">
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-henna-400 mb-3">
               <span>Budget: <strong className="text-henna-700">{l.budget}</strong></span>
               <span>Event: <strong className="text-henna-700">{formatDate(l.eventDate)}</strong></span>
             </div>
-            <div className="flex gap-2">
+            <div className="flex flex-wrap gap-2">
               {l.status === 'new' ? (
                 <button className="px-5 py-2 bg-henna-700 text-cream-100 rounded-xl text-sm font-semibold hover:bg-henna-600 flex items-center gap-1"><Eye size={14} /> Unlock Lead (₹50)</button>
               ) : (

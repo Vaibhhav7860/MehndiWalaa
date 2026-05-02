@@ -44,7 +44,7 @@ export function Navbar() {
                 <Image src="/images/logo.png" alt="MehndiWalaa" width={40} height={40} className="object-cover" />
               </div>
               <div>
-                <span className="text-xl font-bold font-[family-name:var(--font-heading)] text-henna-700">
+                <span className="text-lg sm:text-xl font-bold font-[family-name:var(--font-heading)] text-henna-700">
                   Mehndi<span className="text-gold-500">Walaa</span>
                 </span>
               </div>
@@ -141,7 +141,7 @@ export function Navbar() {
               ) : (
                 <button
                   onClick={openOtpModal}
-                  className="px-5 py-2 bg-henna-700 text-cream-100 text-sm font-semibold rounded-full hover:bg-henna-600 transition-all hover:shadow-lg hover:shadow-henna-700/20"
+                  className="px-4 py-1.5 sm:px-5 sm:py-2 bg-henna-700 text-cream-100 text-sm font-semibold rounded-full hover:bg-henna-600 transition-all hover:shadow-lg hover:shadow-henna-700/20"
                 >
                   Login
                 </button>

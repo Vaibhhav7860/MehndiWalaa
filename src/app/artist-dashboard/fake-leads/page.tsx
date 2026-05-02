@@ -16,7 +16,7 @@ export default function FakeLeadsPage() {
       <button className="px-5 py-2.5 bg-henna-700 text-cream-100 rounded-xl text-sm font-semibold hover:bg-henna-600">Report New Fake Lead</button>
       <div className="space-y-3">
         {fakeLeads.map(l => (
-          <div key={l.id} className="bg-white rounded-2xl border border-cream-200 p-5 flex items-center justify-between">
+          <div key={l.id} className="bg-white rounded-2xl border border-cream-200 p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
             <div>
               <p className="font-semibold text-henna-800">{l.userName}</p>
               <p className="text-sm text-henna-400">Reason: {l.reason} · {formatDate(l.reportedAt)}</p>

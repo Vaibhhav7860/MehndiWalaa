@@ -10,7 +10,7 @@ export default function ContentModerationPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
         <h1 className="text-2xl font-bold font-[family-name:var(--font-heading)] text-henna-700">Content Moderation</h1>
         <div className="flex gap-2">
           <button className="px-4 py-2 bg-green-500 text-white rounded-lg text-sm font-semibold flex items-center gap-1"><CheckCheck size={14} /> Approve All ({pending.length})</button>

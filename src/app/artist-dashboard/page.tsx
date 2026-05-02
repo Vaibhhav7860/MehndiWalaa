@@ -21,7 +21,7 @@ export default function ArtistDashboardPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-start justify-between">
+      <div className="flex flex-col sm:flex-row items-start justify-between gap-3">
         <div>
           <h1 className="text-2xl font-bold font-[family-name:var(--font-heading)] text-henna-700">Welcome back, {artist.name.split(' ')[0]}!</h1>
           <p className="text-henna-400 text-sm">Here&apos;s your business overview</p>
@@ -38,7 +38,7 @@ export default function ArtistDashboardPage() {
       {/* Urgent Lead Alert */}
       {urgentLeads.length > 0 && (
         <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}
-          className="bg-red-50 border border-red-200 rounded-2xl p-4 flex items-center gap-4">
+          className="bg-red-50 border border-red-200 rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center gap-4">
           <div className="w-10 h-10 bg-red-100 rounded-xl flex items-center justify-center animate-pulse"><Zap size={20} className="text-red-600" /></div>
           <div className="flex-1">
             <p className="font-semibold text-red-800 text-sm">🚨 Urgent Lead — Response needed within 30 minutes!</p>
@@ -73,7 +73,7 @@ export default function ArtistDashboardPage() {
         <div className="space-y-3">
           {mockLeads.slice(0, 4).map((lead, i) => (
             <motion.div key={lead.id} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.1 }}
-              className={`p-4 rounded-xl border ${lead.isUrgent ? 'border-red-200 bg-red-50/50' : 'border-cream-200 bg-cream-50/50'} flex items-center gap-4`}>
+              className={`p-4 rounded-xl border ${lead.isUrgent ? 'border-red-200 bg-red-50/50' : 'border-cream-200 bg-cream-50/50'} flex flex-col sm:flex-row items-start sm:items-center gap-3`}>
               <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm ${lead.isUrgent ? 'bg-red-100 text-red-700' : 'bg-gold-100 text-gold-700'}`}>
                 {lead.userName[0]}
               </div>
@@ -84,7 +84,7 @@ export default function ArtistDashboardPage() {
                 </div>
                 <p className="text-xs text-henna-400">{lead.occasion} · {lead.city} · {lead.budget}</p>
               </div>
-              <div className="flex gap-2">
+              <div className="flex gap-2 self-end sm:self-auto">
                 {lead.status === 'new' ? (
                   <button className="px-4 py-2 bg-henna-700 text-cream-100 text-xs font-semibold rounded-lg hover:bg-henna-600">Unlock Lead</button>
                 ) : (

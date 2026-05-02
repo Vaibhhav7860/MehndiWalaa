@@ -118,13 +118,13 @@ export default function ArtistDetailPage() {
             {activeTab === 'services' && (
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-3">
                 {artist.services.map(s => (
-                  <div key={s.id} className="bg-white p-5 rounded-2xl border border-cream-200 flex items-center justify-between hover-lift">
+                  <div key={s.id} className="bg-white p-5 rounded-2xl border border-cream-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 hover-lift">
                     <div>
                       <h3 className="font-semibold text-henna-800">{s.name}</h3>
                       <p className="text-sm text-henna-400 mt-1">{s.description}</p>
                       <p className="text-xs text-henna-400 mt-1 flex items-center gap-1"><Clock size={12} /> {s.duration}</p>
                     </div>
-                    <div className="text-right">
+                    <div className="text-left sm:text-right w-full sm:w-auto">
                       <p className="text-lg font-bold text-henna-700">{formatPrice(s.priceRange.min)} - {formatPrice(s.priceRange.max)}</p>
                       <button onClick={handleContact} className="mt-2 px-4 py-1.5 bg-henna-700 text-cream-100 text-xs rounded-full hover:bg-henna-600">Enquire</button>
                     </div>
@@ -153,7 +153,7 @@ export default function ArtistDetailPage() {
                     <div className="flex items-start gap-3">
                       <div className="w-10 h-10 rounded-full bg-gold-100 flex items-center justify-center text-gold-700 font-bold text-sm">{r.userName[0]}</div>
                       <div className="flex-1">
-                        <div className="flex items-center justify-between">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
                           <div><p className="font-semibold text-henna-800 text-sm">{r.userName}</p><p className="text-xs text-henna-400">{r.occasion} · {formatDate(r.date)}</p></div>
                           <div className="flex gap-0.5">{Array.from({length:5},(_,i)=><Star key={i} size={12} className={i < Math.round(r.rating) ? 'fill-gold-500 text-gold-500' : 'text-cream-300'} />)}</div>
                         </div>

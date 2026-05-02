@@ -17,15 +17,15 @@ export default function SubAdminsPage() {
       <p className="text-sm text-henna-400">Sub admins can approve artists, moderate content, manage badges, and review fake leads. Only Super Admin can manage sub admin accounts and platform settings.</p>
       <div className="space-y-3">
         {subAdmins.map(sa => (
-          <div key={sa.id} className="bg-white rounded-2xl border border-cream-200 p-5 flex items-center justify-between">
+          <div key={sa.id} className="bg-white rounded-2xl border border-cream-200 p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
             <div className="flex items-center gap-4">
-              <div className="w-11 h-11 rounded-full bg-henna-100 flex items-center justify-center text-henna-700 font-bold">{sa.name[0]}</div>
-              <div>
+              <div className="w-11 h-11 rounded-full bg-henna-100 flex items-center justify-center text-henna-700 font-bold flex-shrink-0">{sa.name[0]}</div>
+              <div className="min-w-0">
                 <p className="font-semibold text-henna-800">{sa.name}</p>
-                <p className="text-xs text-henna-400">{sa.email} · Cities: {sa.cities.join(', ')}</p>
+                <p className="text-xs text-henna-400 break-all">{sa.email} · Cities: {sa.cities.join(', ')}</p>
               </div>
             </div>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 self-end sm:self-auto">
               <span className={`px-3 py-1 rounded-full text-xs font-medium ${sa.status === 'active' ? 'bg-green-100 text-green-700' : 'bg-cream-100 text-henna-400'}`}>{sa.status}</span>
               <button className="p-2 text-henna-400 hover:text-blue-500"><Edit size={16} /></button>
               <button className="p-2 text-henna-400 hover:text-red-500"><Trash2 size={16} /></button>

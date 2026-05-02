@@ -38,18 +38,20 @@ export default function InvoicesPage() {
 
       <div className="space-y-3">
         {mockInvoices.map(inv => (
-          <div key={inv.id} className="bg-white rounded-2xl border border-cream-200 p-5 flex items-center justify-between">
-            <div>
+          <div key={inv.id} className="bg-white rounded-2xl border border-cream-200 p-5 flex flex-col sm:flex-row items-start sm:items-center gap-3">
+            <div className="flex-1 min-w-0">
               <p className="font-semibold text-henna-800">{inv.id} · {inv.client}</p>
               <p className="text-sm text-henna-400">{inv.occasion} · {inv.date}</p>
             </div>
-            <div className="text-right">
-              <p className="font-bold text-henna-800">{formatPrice(inv.amount)}</p>
-              <span className={`text-xs px-2 py-0.5 rounded-full ${inv.status === 'final' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'}`}>{inv.status}</span>
-            </div>
-            <div className="flex gap-2 ml-4">
-              <button className="p-2 bg-green-50 text-green-600 rounded-lg hover:bg-green-100" title="Send via WhatsApp"><Send size={16} /></button>
-              <button className="p-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100" title="Download PDF"><Download size={16} /></button>
+            <div className="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-end">
+              <div className="text-right">
+                <p className="font-bold text-henna-800">{formatPrice(inv.amount)}</p>
+                <span className={`text-xs px-2 py-0.5 rounded-full ${inv.status === 'final' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'}`}>{inv.status}</span>
+              </div>
+              <div className="flex gap-2">
+                <button className="p-2 bg-green-50 text-green-600 rounded-lg hover:bg-green-100" title="Send via WhatsApp"><Send size={16} /></button>
+                <button className="p-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100" title="Download PDF"><Download size={16} /></button>
+              </div>
             </div>
           </div>
         ))}

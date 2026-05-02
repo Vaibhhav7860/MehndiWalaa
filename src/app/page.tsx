@@ -67,7 +67,7 @@ function HeroSection() {
                 <Search size={18} /> Search
               </Link>
             </div>
-            <div className="flex items-center gap-4 mt-3 text-xs text-henna-400">
+            <div className="flex flex-wrap items-center gap-3 sm:gap-4 mt-3 text-xs text-henna-400">
               <span className="flex items-center gap-1"><Shield size={12} className="text-gold-500" /> 142+ Verified Artists</span>
               <span className="flex items-center gap-1"><MapPin size={12} className="text-gold-500" /> 10+ Cities</span>
               <span className="flex items-center gap-1"><Star size={12} className="text-gold-500" /> 4.7 Avg Rating</span>
@@ -340,7 +340,7 @@ function StatsBanner() {
   return (
     <section className="py-12 bg-henna-700">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8">
           {stats.map((s, i) => (
             <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
               className="text-center">
