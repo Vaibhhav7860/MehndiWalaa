@@ -41,7 +41,7 @@ export function OTPModal() {
             initial={{ opacity: 0, scale: 0.9, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
-            className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] max-w-md bg-white rounded-2xl shadow-2xl z-[61] p-8"
+            className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] max-w-md bg-white rounded-2xl shadow-2xl z-[61] p-6 sm:p-8"
           >
             <button onClick={() => { closeOtpModal(); reset(); }} className="absolute top-4 right-4 text-henna-400 hover:text-henna-700">
               <X size={20} />
@@ -52,10 +52,10 @@ export function OTPModal() {
                 <h2 className="text-2xl font-bold font-[family-name:var(--font-heading)] text-henna-700 mb-2">Welcome to MehndiWalaa</h2>
                 <p className="text-henna-400 text-sm mb-6">Enter your mobile number to continue</p>
                 <div className="flex items-center gap-2 mb-4">
-                  <span className="px-3 py-3 bg-cream-100 rounded-lg text-sm font-medium text-henna-700 border border-cream-300">+91</span>
+                  <span className="px-3 py-3 bg-cream-100 rounded-lg text-sm font-medium text-henna-700 border border-cream-300 flex-shrink-0">+91</span>
                   <input type="tel" value={phone} onChange={e => setPhone(e.target.value.replace(/\D/g, '').slice(0, 10))}
                     placeholder="Enter mobile number" maxLength={10}
-                    className="flex-1 px-4 py-3 border border-cream-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold-500 focus:border-transparent text-henna-800" autoFocus />
+                    className="flex-1 min-w-0 px-4 py-3 border border-cream-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold-500 focus:border-transparent text-henna-800" autoFocus />
                 </div>
                 <button onClick={handleSendOtp} disabled={phone.length < 10}
                   className="w-full py-3 bg-henna-700 text-cream-100 rounded-full font-semibold hover:bg-henna-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2">
