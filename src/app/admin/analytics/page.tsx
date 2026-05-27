@@ -1,146 +1,434 @@
 'use client';
-import { useState } from 'react';
-import { BarChart3, TrendingUp, Users, Calendar, MapPin, Download, FileText } from 'lucide-react';
-import { mockAdminStats } from '@/data/mock';
+import { motion } from 'framer-motion';
+import { BarChart3, Users, Activity, ShieldCheck, Sparkles, ArrowUpRight, ArrowDownRight, Download } from 'lucide-react';
+
+const kpis = [
+  { label: 'DAU', value: '580', delta: 8, up: true },
+  { label: 'MAU', value: '3,200', delta: 12, up: true },
+  { label: 'OTP Verification Rate', value: '78%', delta: 3, up: true },
+  { label: 'Lead → Booking Rate', value: '34%', delta: 2, up: true },
+];
+
+const dauMau = [
+  { day: 'Mon', dau: 520, mau: 2400 },
+  { day: 'Tue', dau: 540, mau: 2600 },
+  { day: 'Wed', dau: 600, mau: 2800 },
+  { day: 'Thu', dau: 580, mau: 2950 },
+  { day: 'Fri', dau: 620, mau: 3000 },
+  { day: 'Sat', dau: 640, mau: 3150 },
+  { day: 'Sun', dau: 580, mau: 3200 },
+];
+
+const registrations = [
+  { city: 'Delhi', value: 60 },
+  { city: 'Jaipur', value: 42 },
+  { city: 'Ahmedabad', value: 38 },
+  { city: 'Mumbai', value: 28 },
+  { city: 'Surat', value: 18 },
+];
+
+const topCities = [
+  { city: 'Delhi', value: 60 },
+  { city: 'Jaipur', value: 42 },
+  { city: 'Ahmedabad', value: 38 },
+  { city: 'Mumbai', value: 28 },
+  { city: 'Surat', value: 18 },
+];
+
+const revenueBreakdown = [
+  { month: 'Jan', subscriptions: 80, leads: 60, commissions: 90, boosts: 40 },
+  { month: 'Feb', subscriptions: 100, leads: 75, commissions: 110, boosts: 55 },
+  { month: 'Mar', subscriptions: 120, leads: 95, commissions: 130, boosts: 70 },
+];
+
+const planDistribution = [
+  { name: 'Free', value: 35, color: '#9CA3AF' },
+  { name: 'Starter', value: 28, color: '#D4AF37' },
+  { name: 'Pro', value: 22, color: '#8B2040' },
+  { name: 'Premium', value: 15, color: '#4B0002' },
+];
+
+const fakeLeadRate = [
+  { month: 'Jan', value: 6 },
+  { month: 'Feb', value: 5 },
+  { month: 'Mar', value: 4 },
+  { month: 'Apr', value: 3 },
+  { month: 'May', value: 2 },
+];
 
 export default function AnalyticsPage() {
-  const s = mockAdminStats;
-  const [dateRange, setDateRange] = useState('6m');
-  const months = dateRange === '3m' ? ['Apr','May','Jun'] : dateRange === '6m' ? ['Jan','Feb','Mar','Apr','May','Jun'] : ['Jul','Aug','Sep','Oct','Nov','Dec','Jan','Feb','Mar','Apr','May','Jun'];
-  const data = dateRange === '3m' ? [1580, 1890, 2100] : dateRange === '6m' ? [820, 1050, 1340, 1580, 1890, 2100] : [420, 510, 620, 700, 780, 820, 1050, 1340, 1580, 1890, 2100, 2350];
-  const maxVal = Math.max(...data);
-
   return (
     <div className="space-y-6">
-      <div className="flex items-start justify-between flex-wrap gap-3">
-        <h1 className="text-2xl font-bold font-[family-name:var(--font-heading)] text-henna-700 flex items-center gap-2"><BarChart3 size={24} /> Platform Analytics</h1>
-        <div className="flex items-center gap-2">
-          <div className="flex bg-cream-100 rounded-lg p-0.5">
-            {[{v:'3m',l:'3M'},{v:'6m',l:'6M'},{v:'12m',l:'1Y'}].map(r => (
-              <button key={r.v} onClick={() => setDateRange(r.v)} className={`px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${dateRange === r.v ? 'bg-henna-700 text-cream-100' : 'text-henna-600 hover:bg-cream-200'}`}>{r.l}</button>
-            ))}
-          </div>
-          <button className="px-3 py-1.5 border border-cream-300 rounded-lg text-xs font-medium text-henna-600 hover:bg-cream-50 flex items-center gap-1"><Download size={12} /> CSV</button>
-          <button className="px-3 py-1.5 border border-cream-300 rounded-lg text-xs font-medium text-henna-600 hover:bg-cream-50 flex items-center gap-1"><FileText size={12} /> PDF</button>
+      <div className="flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <h1 className="text-2xl font-bold font-[family-name:var(--font-heading)] text-henna-700 flex items-center gap-2">
+            <BarChart3 size={22} /> Analytics
+          </h1>
+          <p className="text-henna-400 text-sm">Last 30 days · platform health and revenue mix</p>
         </div>
+        <span className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full bg-cream-100 text-henna-700 border border-cream-200">
+          Last 30 days
+        </span>
       </div>
-      <div className="grid sm:grid-cols-4 gap-4">
-        {[
-          { label: 'DAU', value: s.dau.toLocaleString(), icon: Users, color: 'text-blue-600' },
-          { label: 'MAU', value: s.mau.toLocaleString(), icon: TrendingUp, color: 'text-green-600' },
-          { label: 'Conversion', value: `${s.conversionRate}%`, icon: Calendar, color: 'text-purple-600' },
-          { label: 'Cities', value: s.topCities.length.toString(), icon: MapPin, color: 'text-gold-600' },
-        ].map((m, i) => (
-          <div key={i} className="bg-white p-4 rounded-2xl border border-cream-200">
-            <m.icon size={20} className={`${m.color} mb-2`} />
-            <p className="text-2xl font-bold text-henna-800">{m.value}</p>
-            <p className="text-xs text-henna-400">{m.label}</p>
-          </div>
+
+      {/* KPI strip */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+        {kpis.map((k, i) => (
+          <motion.div
+            key={k.label}
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: i * 0.04 }}
+            className="bg-white rounded-2xl border border-cream-200 p-4"
+          >
+            <p className="text-[11px] uppercase tracking-wider text-henna-400 font-semibold flex items-center gap-1">
+              {k.label === 'DAU' && <Users size={12} />}
+              {k.label === 'MAU' && <Activity size={12} />}
+              {k.label === 'OTP Verification Rate' && <ShieldCheck size={12} />}
+              {k.label === 'Lead → Booking Rate' && <Sparkles size={12} />}
+              {k.label}
+            </p>
+            <p className="mt-1 text-3xl font-bold text-henna-800 font-[family-name:var(--font-heading)] tabular-nums">{k.value}</p>
+            <span className={`mt-1 inline-flex items-center gap-0.5 text-[11px] font-semibold ${k.up ? 'text-emerald-600' : 'text-rose-600'}`}>
+              {k.up ? <ArrowUpRight size={12} /> : <ArrowDownRight size={12} />}
+              {k.delta}% vs last month
+            </span>
+          </motion.div>
         ))}
       </div>
 
-      {(() => {
-        const chartW = 700, chartH = 260;
-        const padL = 55, padR = 20, padT = 20, padB = 40;
-        const w = chartW - padL - padR;
-        const h = chartH - padT - padB;
-        const minVal = Math.min(...data) * 0.8;
-        const yRange = maxVal - minVal || 1;
-        const points = data.map((d, i) => ({
-          x: padL + (i / (data.length - 1)) * w,
-          y: padT + h - ((d - minVal) / yRange) * h,
-          val: d,
-          label: months[i],
-        }));
-        const linePath = points.map((p, i) => `${i === 0 ? 'M' : 'L'}${p.x},${p.y}`).join(' ');
-        const areaPath = `${linePath} L${points[points.length - 1].x},${padT + h} L${points[0].x},${padT + h} Z`;
-        const yTicks = 5;
-        const ySteps = Array.from({ length: yTicks + 1 }, (_, i) => {
-          const val = minVal + (yRange / yTicks) * i;
-          const y = padT + h - (i / yTicks) * h;
-          return { val: Math.round(val), y };
-        });
+      {/* DAU/MAU dual-line + Registrations vertical bar */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <DualLineCard title="DAU / MAU" data={dauMau} />
+        <VerticalBarCard
+          title="New Artist Registrations"
+          subtitle="By city · Last 30 days"
+          data={registrations}
+          tone="gold"
+        />
+      </div>
 
-        return (
-          <div className="bg-white rounded-2xl border border-cream-200 p-6">
-            <h3 className="font-semibold text-henna-700 mb-4">Monthly User Growth</h3>
-            <div className="w-full overflow-x-auto">
-              <svg viewBox={`0 0 ${chartW} ${chartH}`} className="w-full min-w-[500px]" style={{ height: 'auto', maxHeight: 280 }}>
-                <defs>
-                  <linearGradient id="lineGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#D4AF37" stopOpacity="0.4" />
-                    <stop offset="100%" stopColor="#D4AF37" stopOpacity="0.02" />
-                  </linearGradient>
-                  <linearGradient id="strokeGrad" x1="0" y1="0" x2="1" y2="0">
-                    <stop offset="0%" stopColor="#B8960E" />
-                    <stop offset="50%" stopColor="#D4AF37" />
-                    <stop offset="100%" stopColor="#E8C547" />
-                  </linearGradient>
-                  <filter id="dotShadow" x="-50%" y="-50%" width="200%" height="200%">
-                    <feDropShadow dx="0" dy="1" stdDeviation="2" floodColor="#D4AF37" floodOpacity="0.4" />
-                  </filter>
-                </defs>
+      {/* Top cities horizontal + Revenue stacked */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <HorizontalBarCard title="Top Cities by Artist Count" data={topCities} />
+        <StackedBarCard title="Revenue Breakdown" data={revenueBreakdown} />
+      </div>
 
-                {/* Horizontal grid lines + Y labels */}
-                {ySteps.map((t, i) => (
-                  <g key={i}>
-                    <line x1={padL} y1={t.y} x2={chartW - padR} y2={t.y} stroke="#F0ECD0" strokeWidth="1" />
-                    <text x={padL - 8} y={t.y + 4} textAnchor="end" fontSize="10" fill="#8B2040" fontWeight="500">{t.val.toLocaleString()}</text>
-                  </g>
-                ))}
+      {/* Subscription donut + fake lead rate */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <DonutCard data={planDistribution} />
+        <LineCard title="Fake Lead Rate" subtitle="Reports per 100 leads" data={fakeLeadRate} />
+      </div>
+    </div>
+  );
+}
 
-                {/* Area fill */}
-                <path d={areaPath} fill="url(#lineGrad)" />
+function ChartHeader({ title, subtitle }: { title: string; subtitle?: string }) {
+  return (
+    <div className="flex items-center justify-between mb-4">
+      <div>
+        <h3 className="text-base font-bold font-[family-name:var(--font-heading)] text-henna-700">{title}</h3>
+        {subtitle && <p className="text-[11px] uppercase tracking-wider text-henna-400">{subtitle}</p>}
+      </div>
+      <button className="inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-full bg-cream-100 text-henna-700 border border-cream-200 hover:bg-cream-50">
+        <Download size={11} /> Export CSV
+      </button>
+    </div>
+  );
+}
 
-                {/* Line */}
-                <path d={linePath} fill="none" stroke="url(#strokeGrad)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+function DualLineCard({ title, data }: { title: string; data: { day: string; dau: number; mau: number }[] }) {
+  const w = 700, h = 220, padL = 50, padR = 20, padT = 20, padB = 30;
+  const innerW = w - padL - padR;
+  const innerH = h - padT - padB;
+  const max = Math.max(...data.flatMap(d => [d.dau, d.mau]));
+  const yTicks = 4;
+  const ySteps = Array.from({ length: yTicks + 1 }, (_, i) => Math.round((max / yTicks) * i));
 
-                {/* Data points + labels */}
-                {points.map((p, i) => (
-                  <g key={i}>
-                    {/* Vertical dashed guide */}
-                    <line x1={p.x} y1={p.y} x2={p.x} y2={padT + h} stroke="#D4AF37" strokeWidth="0.5" strokeDasharray="3,3" opacity="0.3" />
+  const pointsFor = (key: 'dau' | 'mau') => data.map((d, i) => ({
+    x: padL + (i / (data.length - 1)) * innerW,
+    y: padT + innerH - (d[key] / max) * innerH,
+    val: d[key],
+  }));
 
-                    {/* Outer glow ring */}
-                    <circle cx={p.x} cy={p.y} r="8" fill="#D4AF37" opacity="0.1" />
+  const dauPath = pointsFor('dau').map((p, i) => `${i === 0 ? 'M' : 'L'}${p.x},${p.y}`).join(' ');
+  const mauPath = pointsFor('mau').map((p, i) => `${i === 0 ? 'M' : 'L'}${p.x},${p.y}`).join(' ');
 
-                    {/* Data dot */}
-                    <circle cx={p.x} cy={p.y} r="5" fill="white" stroke="#D4AF37" strokeWidth="2.5" filter="url(#dotShadow)" />
+  return (
+    <div className="bg-white rounded-2xl border border-cream-200 p-5">
+      <ChartHeader title={title} />
+      <div className="overflow-x-auto">
+        <svg viewBox={`0 0 ${w} ${h}`} className="w-full" style={{ height: 'auto', maxHeight: 260 }}>
+          {/* Y grid */}
+          {ySteps.map((v, i) => {
+            const y = padT + innerH - (i / yTicks) * innerH;
+            return (
+              <g key={i}>
+                <line x1={padL} y1={y} x2={w - padR} y2={y} stroke="#F0ECD0" strokeWidth="1" />
+                <text x={padL - 8} y={y + 4} textAnchor="end" fontSize="10" fill="#8B2040">{v.toLocaleString()}</text>
+              </g>
+            );
+          })}
+          {/* X labels */}
+          {data.map((d, i) => {
+            const x = padL + (i / (data.length - 1)) * innerW;
+            return <text key={d.day} x={x} y={h - 8} textAnchor="middle" fontSize="11" fill="#8B2040">{d.day}</text>;
+          })}
+          {/* MAU line (henna) */}
+          <motion.path d={mauPath} fill="none" stroke="#7B1F2B" strokeWidth="2.5" strokeLinecap="round"
+            initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.8 }} />
+          {pointsFor('mau').map((p, i) => (
+            <circle key={i} cx={p.x} cy={p.y} r="3.5" fill="white" stroke="#7B1F2B" strokeWidth="2" />
+          ))}
+          {/* DAU line (gold) */}
+          <motion.path d={dauPath} fill="none" stroke="#D4AF37" strokeWidth="2.5" strokeLinecap="round"
+            initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.8, delay: 0.1 }} />
+          {pointsFor('dau').map((p, i) => (
+            <circle key={i} cx={p.x} cy={p.y} r="3.5" fill="white" stroke="#D4AF37" strokeWidth="2" />
+          ))}
+        </svg>
+      </div>
+      <div className="mt-3 flex items-center gap-4 text-xs">
+        <span className="inline-flex items-center gap-1.5"><span className="w-3 h-3 rounded bg-gold-500" /> DAU</span>
+        <span className="inline-flex items-center gap-1.5"><span className="w-3 h-3 rounded bg-henna-700" /> MAU</span>
+      </div>
+    </div>
+  );
+}
 
-                    {/* Value label above dot */}
-                    <text x={p.x} y={p.y - 14} textAnchor="middle" fontSize="10" fontWeight="700" fill="#4B0002">{p.val.toLocaleString()}</text>
+function VerticalBarCard({
+  title,
+  subtitle,
+  data,
+  tone,
+}: {
+  title: string;
+  subtitle?: string;
+  data: { city: string; value: number }[];
+  tone: 'gold' | 'henna';
+}) {
+  const max = Math.max(...data.map(d => d.value));
+  const yTicks = 4;
+  const ySteps = Array.from({ length: yTicks + 1 }, (_, i) => Math.round((max / yTicks) * i));
+  const barClass = tone === 'gold' ? 'from-gold-500 to-gold-300' : 'from-henna-700 to-henna-500';
 
-                    {/* Month label below axis */}
-                    <text x={p.x} y={padT + h + 18} textAnchor="middle" fontSize="11" fill="#8B2040" fontWeight="500">{p.label}</text>
-                  </g>
-                ))}
-              </svg>
-            </div>
+  return (
+    <div className="bg-white rounded-2xl border border-cream-200 p-5">
+      <ChartHeader title={title} subtitle={subtitle} />
+      <div className="relative h-48 flex">
+        <div className="flex flex-col-reverse justify-between text-[10px] text-henna-400 pr-2 py-1 tabular-nums">
+          {ySteps.map((s, i) => <span key={i}>{s}</span>)}
+        </div>
+        <div className="relative flex-1 border-l border-b border-cream-200">
+          <div className="absolute inset-0 flex flex-col-reverse justify-between pointer-events-none">
+            {ySteps.map((_, i) => <div key={i} className="border-t border-cream-100 first:border-t-transparent" />)}
           </div>
-        );
-      })()}
+          <div className="relative h-full flex items-end gap-2 px-3 pb-1">
+            {data.map((d, i) => {
+              const h = Math.round((d.value / max) * 100);
+              return (
+                <div key={d.city} className="flex-1 h-full flex flex-col items-center justify-end">
+                  <span className="text-[10px] font-semibold text-henna-700 tabular-nums mb-1">{d.value}</span>
+                  <motion.div
+                    initial={{ height: 0 }}
+                    animate={{ height: `${h}%` }}
+                    transition={{ duration: 0.7, delay: i * 0.05 }}
+                    className={`w-full rounded-t-lg bg-gradient-to-t ${barClass}`}
+                  />
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+      <div className="flex justify-around mt-2 text-[11px] text-henna-500 pl-8">
+        {data.map(d => <span key={d.city}>{d.city}</span>)}
+      </div>
+    </div>
+  );
+}
 
-      <div className="grid lg:grid-cols-2 gap-6">
-        <div className="bg-white rounded-2xl border border-cream-200 p-5">
-          <h3 className="font-semibold text-henna-700 mb-3">Bookings by Occasion</h3>
-          {[{ name: 'Wedding', pct: 45 }, { name: 'Engagement', pct: 20 }, { name: 'Karva Chauth', pct: 15 }, { name: 'Eid', pct: 10 }, { name: 'Other', pct: 10 }].map(o => (
-            <div key={o.name} className="flex items-center gap-3 mb-2">
-              <span className="w-24 text-sm text-henna-600">{o.name}</span>
-              <div className="flex-1 h-3 bg-cream-100 rounded-full overflow-hidden"><div className="h-full bg-henna-600 rounded-full" style={{ width: `${o.pct}%` }} /></div>
-              <span className="text-sm font-semibold text-henna-700 w-10 text-right">{o.pct}%</span>
+function HorizontalBarCard({ title, data }: { title: string; data: { city: string; value: number }[] }) {
+  const max = Math.max(...data.map(d => d.value));
+  return (
+    <div className="bg-white rounded-2xl border border-cream-200 p-5">
+      <ChartHeader title={title} />
+      <div className="space-y-3">
+        {data.map((d, i) => {
+          const pct = Math.round((d.value / max) * 100);
+          return (
+            <div key={d.city} className="flex items-center gap-3">
+              <span className="w-24 text-sm font-medium text-henna-700 truncate">{d.city}</span>
+              <div className="flex-1 h-7 rounded-lg bg-cream-100 overflow-hidden">
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={{ width: `${pct}%` }}
+                  transition={{ duration: 0.7, delay: i * 0.06 }}
+                  className="h-full rounded-lg bg-gradient-to-r from-henna-600 to-henna-700 flex items-center justify-end pr-2 text-[10px] font-semibold text-cream-100"
+                >
+                  {d.value}
+                </motion.div>
+              </div>
             </div>
-          ))}
-        </div>
-        <div className="bg-white rounded-2xl border border-cream-200 p-5">
-          <h3 className="font-semibold text-henna-700 mb-3">Revenue by City</h3>
-          {s.topCities.map(c => (
-            <div key={c.city} className="flex items-center gap-3 mb-2">
-              <span className="w-24 text-sm text-henna-600">{c.city}</span>
-              <div className="flex-1 h-3 bg-cream-100 rounded-full overflow-hidden"><div className="h-full bg-gold-500 rounded-full" style={{ width: `${(c.count / 50) * 100}%` }} /></div>
-              <span className="text-sm font-semibold text-henna-700 w-10 text-right">{c.count}</span>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+function StackedBarCard({
+  title,
+  data,
+}: {
+  title: string;
+  data: { month: string; subscriptions: number; leads: number; commissions: number; boosts: number }[];
+}) {
+  const segments: { key: keyof Omit<typeof data[number], 'month'>; label: string; color: string }[] = [
+    { key: 'subscriptions', label: 'Subscriptions', color: '#7B1F2B' },
+    { key: 'leads', label: 'Leads', color: '#D4AF37' },
+    { key: 'commissions', label: 'Commissions', color: '#10B981' },
+    { key: 'boosts', label: 'Boosts', color: '#A78BFA' },
+  ];
+  const totals = data.map(d => d.subscriptions + d.leads + d.commissions + d.boosts);
+  const max = Math.max(...totals);
+  return (
+    <div className="bg-white rounded-2xl border border-cream-200 p-5">
+      <ChartHeader title={title} subtitle="In ₹K" />
+      <div className="flex items-end gap-6 h-48 pb-1 border-b border-cream-200">
+        {data.map((d, i) => {
+          const total = totals[i];
+          const tHeight = Math.round((total / max) * 100);
+          return (
+            <div key={d.month} className="flex-1 h-full flex flex-col items-center justify-end gap-1">
+              <span className="text-[10px] font-semibold text-henna-700 tabular-nums">₹{total}K</span>
+              <motion.div
+                initial={{ height: 0 }}
+                animate={{ height: `${tHeight}%` }}
+                transition={{ duration: 0.7, delay: i * 0.06 }}
+                className="w-full rounded-t-lg overflow-hidden flex flex-col-reverse"
+              >
+                {segments.map(seg => {
+                  const segPct = total ? (d[seg.key] / total) * 100 : 0;
+                  return <div key={seg.key} style={{ height: `${segPct}%`, background: seg.color }} />;
+                })}
+              </motion.div>
+              <span className="text-[11px] text-henna-500">{d.month}</span>
             </div>
-          ))}
+          );
+        })}
+      </div>
+      <div className="mt-3 flex flex-wrap gap-3 text-xs">
+        {segments.map(s => (
+          <span key={s.key} className="inline-flex items-center gap-1.5 text-henna-700">
+            <span className="w-2.5 h-2.5 rounded-sm" style={{ background: s.color }} />
+            {s.label}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function DonutCard({ data }: { data: { name: string; value: number; color: string }[] }) {
+  const total = data.reduce((s, d) => s + d.value, 0);
+  const radius = 60;
+  const strokeW = 22;
+  const circumference = 2 * Math.PI * radius;
+  let cumulative = 0;
+  return (
+    <div className="bg-white rounded-2xl border border-cream-200 p-5">
+      <ChartHeader title="Subscription Distribution" />
+      <div className="flex flex-col sm:flex-row items-center gap-6">
+        <div className="relative w-44 h-44 shrink-0">
+          <svg viewBox="0 0 160 160" className="w-full h-full -rotate-90">
+            {data.map((d, i) => {
+              const value = (d.value / total) * circumference;
+              const dasharray = `${value} ${circumference - value}`;
+              const dashoffset = -cumulative;
+              cumulative += value;
+              return (
+                <motion.circle
+                  key={d.name}
+                  cx="80" cy="80" r={radius}
+                  fill="none" stroke={d.color} strokeWidth={strokeW}
+                  strokeDasharray={dasharray} strokeDashoffset={dashoffset}
+                  initial={{ strokeDasharray: `0 ${circumference}` }}
+                  animate={{ strokeDasharray: dasharray }}
+                  transition={{ duration: 0.8, delay: i * 0.06 }}
+                />
+              );
+            })}
+          </svg>
+          <div className="absolute inset-0 flex flex-col items-center justify-center">
+            <span className="text-2xl font-bold text-henna-800 font-[family-name:var(--font-heading)] tabular-nums">{total}</span>
+            <span className="text-[10px] uppercase tracking-wider text-henna-400">Artists</span>
+          </div>
         </div>
+        <ul className="flex-1 w-full space-y-2">
+          {data.map(d => {
+            const pct = Math.round((d.value / total) * 100);
+            return (
+              <li key={d.name} className="flex items-center gap-3">
+                <span className="w-2.5 h-2.5 rounded-sm" style={{ background: d.color }} />
+                <span className="flex-1 text-sm text-henna-700">{d.name}</span>
+                <span className="text-sm font-semibold text-henna-800 tabular-nums">{d.value}</span>
+                <span className="text-xs text-henna-400 tabular-nums w-10 text-right">{pct}%</span>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    </div>
+  );
+}
+
+function LineCard({ title, subtitle, data }: { title: string; subtitle?: string; data: { month: string; value: number }[] }) {
+  const w = 700, h = 220, padL = 40, padR = 20, padT = 20, padB = 30;
+  const innerW = w - padL - padR;
+  const innerH = h - padT - padB;
+  const max = Math.max(...data.map(d => d.value));
+  const points = data.map((d, i) => ({
+    x: padL + (i / (data.length - 1)) * innerW,
+    y: padT + innerH - (d.value / max) * innerH,
+    val: d.value,
+    label: d.month,
+  }));
+  const linePath = points.map((p, i) => `${i === 0 ? 'M' : 'L'}${p.x},${p.y}`).join(' ');
+  const areaPath = `${linePath} L${points[points.length - 1].x},${padT + innerH} L${points[0].x},${padT + innerH} Z`;
+
+  return (
+    <div className="bg-white rounded-2xl border border-cream-200 p-5">
+      <ChartHeader title={title} subtitle={subtitle} />
+      <div className="overflow-x-auto">
+        <svg viewBox={`0 0 ${w} ${h}`} className="w-full" style={{ height: 'auto', maxHeight: 260 }}>
+          <defs>
+            <linearGradient id="fakeLeadFill" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#D4AF37" stopOpacity="0.35" />
+              <stop offset="100%" stopColor="#D4AF37" stopOpacity="0.02" />
+            </linearGradient>
+          </defs>
+          {[0, 0.25, 0.5, 0.75, 1].map((t, i) => {
+            const y = padT + innerH * t;
+            const v = Math.round(max * (1 - t));
+            return (
+              <g key={i}>
+                <line x1={padL} y1={y} x2={w - padR} y2={y} stroke="#F0ECD0" />
+                <text x={padL - 8} y={y + 4} fontSize="10" fill="#8B2040" textAnchor="end">{v}</text>
+              </g>
+            );
+          })}
+          <path d={areaPath} fill="url(#fakeLeadFill)" />
+          <motion.path d={linePath} fill="none" stroke="#B8960E" strokeWidth="2.5" strokeLinecap="round"
+            initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.8 }} />
+          {points.map((p, i) => (
+            <g key={i}>
+              <circle cx={p.x} cy={p.y} r="4" fill="white" stroke="#D4AF37" strokeWidth="2" />
+              <text x={p.x} y={p.y - 10} textAnchor="middle" fontSize="10" fontWeight="700" fill="#4B0002">{p.val}</text>
+              <text x={p.x} y={padT + innerH + 18} textAnchor="middle" fontSize="11" fill="#8B2040">{p.label}</text>
+            </g>
+          ))}
+        </svg>
       </div>
     </div>
   );

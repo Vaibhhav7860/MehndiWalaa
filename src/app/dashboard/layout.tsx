@@ -2,16 +2,21 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { LayoutDashboard, Heart, Palette, Calendar, MessageCircle, GitCompare, Star, Settings, ArrowLeft, Menu, X } from 'lucide-react';
+import { LayoutDashboard, Heart, Palette, Calendar, MessageCircle, GitCompare, Star, Settings, ArrowLeft, Menu, X, Wallet, Sparkles, CalendarHeart, Timer, FlaskConical } from 'lucide-react';
 
 const sidebarLinks = [
   { href: '/dashboard', icon: LayoutDashboard, label: 'Overview' },
+  { href: '/dashboard/wallet', icon: Wallet, label: 'Wallet & Escrow' },
   { href: '/dashboard/shortlist', icon: Heart, label: 'My Shortlist' },
-  { href: '/dashboard/mood-board', icon: Palette, label: 'Mood Board' },
+  { href: '/dashboard/design-shortlist', icon: Sparkles, label: 'Design Shortlist' },
   { href: '/dashboard/bookings', icon: Calendar, label: 'My Bookings' },
-  { href: '/dashboard/chat', icon: MessageCircle, label: 'Chat' },
+  { href: '/dashboard/festival-appointments', icon: CalendarHeart, label: 'Festival Appointments' },
+  { href: '/dashboard/service-timer', icon: Timer, label: 'Service Timer' },
+  { href: '/dashboard/trial-sessions', icon: FlaskConical, label: 'Trial Sessions' },
+  { href: '/dashboard/reviews', icon: Star, label: 'My Reviews & Ratings' },
+  { href: '/dashboard/mood-board', icon: Palette, label: 'Mood Board' },
+  { href: '/dashboard/chat', icon: MessageCircle, label: 'Enquired Artists (Chat)' },
   { href: '/dashboard/compare', icon: GitCompare, label: 'Compare Artists' },
-  { href: '/dashboard/reviews', icon: Star, label: 'My Reviews' },
   { href: '/dashboard/settings', icon: Settings, label: 'Settings' },
 ];
 

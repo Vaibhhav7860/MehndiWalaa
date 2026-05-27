@@ -1,7 +1,7 @@
 'use client';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { Heart, Calendar, MessageCircle, Palette, Star, ArrowRight, Clock, CheckCircle } from 'lucide-react';
+import { Heart, Calendar, MessageCircle, ArrowRight, Receipt, BadgeCheck, Lock, ThumbsUp, Wallet } from 'lucide-react';
 import { mockBookings } from '@/data/mock';
 import { formatPrice, formatDate } from '@/lib/utils';
 
@@ -13,10 +13,17 @@ const statusColors: Record<string, string> = {
 
 export default function DashboardPage() {
   const stats = [
-    { icon: Heart, label: 'Shortlisted', value: '3', color: 'bg-red-50 text-red-500', href: '/dashboard/shortlist' },
-    { icon: Calendar, label: 'Bookings', value: '3', color: 'bg-blue-50 text-blue-500', href: '/dashboard/bookings' },
+    { icon: Heart, label: 'Shortlisted Artists', value: '3', color: 'bg-red-50 text-red-500', href: '/dashboard/shortlist' },
+    { icon: Calendar, label: 'Total Bookings', value: '3', color: 'bg-blue-50 text-blue-500', href: '/dashboard/bookings' },
     { icon: MessageCircle, label: 'Chats', value: '2', color: 'bg-green-50 text-green-500', href: '/dashboard/chat' },
-    { icon: Palette, label: 'Mood Board', value: '2', color: 'bg-purple-50 text-purple-500', href: '/dashboard/mood-board' },
+    { icon: Wallet, label: 'Wallet Balance', value: '₹1000', color: 'bg-purple-50 text-purple-500', href: '/dashboard/wallet' },
+    { icon: Receipt, label: 'Pending Invoices', value: '3', color: 'bg-amber-50 text-amber-600', href: '/dashboard/invoices' },
+  ];
+
+  const trustIndicators = [
+    { icon: BadgeCheck, label: 'Verified Portfolios' },
+    { icon: Lock, label: 'Secure Payments' },
+    { icon: ThumbsUp, label: 'Authentic Reviews' },
   ];
 
   return (
@@ -26,7 +33,7 @@ export default function DashboardPage() {
         <p className="text-henna-400 text-sm">Welcome back! Here&apos;s your activity overview.</p>
       </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
         {stats.map((s, i) => (
           <motion.div key={i} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 }}>
             <Link href={s.href} className="block bg-white p-4 rounded-2xl border border-cream-200 hover-lift">
@@ -56,6 +63,26 @@ export default function DashboardPage() {
               </span>
               <p className="text-sm font-bold text-henna-700">{formatPrice(b.totalAmount)}</p>
             </div>
+          ))}
+        </div>
+      </div>
+
+      <div>
+        <h2 className="text-xl font-bold font-[family-name:var(--font-heading)] text-henna-700 mb-3">Trust Indicators</h2>
+        <div className="space-y-3">
+          {trustIndicators.map((t, i) => (
+            <motion.div
+              key={t.label}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.08 }}
+              className="flex items-center gap-4 bg-white rounded-2xl border border-cream-200 p-4"
+            >
+              <div className="w-10 h-10 rounded-xl bg-henna-50 text-henna-600 flex items-center justify-center">
+                <t.icon size={20} />
+              </div>
+              <p className="text-sm font-medium text-henna-800">{t.label}</p>
+            </motion.div>
           ))}
         </div>
       </div>
